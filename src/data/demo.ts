@@ -1,6 +1,7 @@
 export type Transaction = { id: string; name: string; category: string; amount: number; date: string; note?: string };
 export type Vault = { id: string; name: string; goal: number; saved: number; icon: string };
-export type Circle = { id: string; name: string; members: number; expenses: number; balance: number };
+export type CircleExpense = { id: string; title: string; paidBy: string; amount: number; splitWith: string[]; date: string };
+export type Circle = { id: string; name: string; members: number; expenses: number; balance: number; roster?: string[]; ledger?: CircleExpense[] };
 export type State = { name: string; transactions: Transaction[]; vaults: Vault[]; circles: Circle[]; reducedMotion: boolean; hideAmounts: boolean };
 export const money = (value: number) => `${value < 0 ? '-' : ''}${String.fromCharCode(8377)}${Math.abs(value).toLocaleString('en-IN', {maximumFractionDigits:2, minimumFractionDigits:0})}`;
 export const starter: State = {

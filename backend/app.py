@@ -237,12 +237,22 @@ class WorkspaceVault(BaseModel):
     saved: float = Field(ge=0, le=1000000000, allow_inf_nan=False)
     icon: str = Field(max_length=30)
 
+class WorkspaceCircleExpense(BaseModel):
+    id: str = Field(min_length=1, max_length=100)
+    title: str = Field(min_length=1, max_length=100)
+    paidBy: str = Field(min_length=1, max_length=40)
+    amount: float = Field(gt=0, le=1000000, allow_inf_nan=False)
+    splitWith: list[str] = Field(min_length=1, max_length=14)
+    date: str = Field(min_length=1, max_length=32)
+
 class WorkspaceCircle(BaseModel):
     id: str = Field(min_length=1, max_length=100)
     name: str = Field(min_length=1, max_length=150)
     members: int = Field(ge=0, le=100000)
     expenses: float = Field(ge=0, le=1000000000, allow_inf_nan=False)
     balance: float = Field(ge=-1000000000, le=1000000000, allow_inf_nan=False)
+    roster: list[str] | None = Field(default=None, max_length=14)
+    ledger: list[WorkspaceCircleExpense] | None = Field(default=None, max_length=1000)
 
 class WorkspaceState(BaseModel):
     name: str = Field(max_length=100)
