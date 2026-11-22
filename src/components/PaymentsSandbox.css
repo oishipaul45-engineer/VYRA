@@ -1,0 +1,25 @@
+.vyra-payment-lab{margin-top:28px;padding:24px;border:2px solid #24152f;background:#fff8ef;border-radius:26px;box-shadow:7px 7px 0 rgba(36,21,47,.08);color:#24152f}
+.vyra-payment-lab-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:20px}
+.vyra-payment-lab-kicker{font:800 10px 'Space Grotesk',sans-serif;letter-spacing:.17em;color:#ee684e}
+.vyra-payment-lab-head h2{font:800 clamp(23px,3vw,34px)/1.1 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin:8px 0}
+.vyra-payment-lab-head h2 em{font-style:normal;color:#ff633e}
+.vyra-payment-lab-head p{max-width:550px;font-size:12px;color:#796b75;margin:0;line-height:1.6}
+.vyra-payment-lab-mode{display:flex;align-items:center;gap:5px;flex:none;background:#45e6d0;border-radius:99px;padding:9px 12px;font:800 10px 'Space Grotesk',sans-serif}
+.vyra-payment-lab-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.vyra-payment-lab-card{border-radius:21px;border:1px solid #e3d4cb;background:#fffef9;padding:20px;min-width:0}
+.vyra-payment-lab-card-secondary{background:#f5eafa}
+.vyra-payment-lab-icon{width:42px;height:42px;display:grid;place-items:center;background:#ffdfd4;border-radius:13px;color:#24152f;margin-bottom:14px}
+.vyra-payment-lab-card-secondary .vyra-payment-lab-icon{background:#c6b0eb}
+.vyra-payment-lab-card h3{font:800 20px 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin:0 0 8px}
+.vyra-payment-lab-card p{font-size:12px;color:#7e6d77;line-height:1.65;min-height:58px}
+.vyra-payment-lab-state{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;color:#684c67;margin:15px 0}
+.vyra-payment-lab-label{display:grid;gap:7px;font-size:11px;font-weight:700;margin:15px 0}
+.vyra-payment-lab-label select{width:100%;padding:12px;border-radius:10px;border:1px solid #d9c9ce;color:#24152f;background:white;min-width:0}
+.vyra-payment-lab-card button{width:100%;border:0;background:#24152f;color:#fffaf1;border-radius:12px;padding:13px;font-size:11px;font-weight:800;letter-spacing:.05em}
+.vyra-payment-lab-card button:disabled{opacity:.52;cursor:not-allowed}
+.vyra-payment-lab-card small{display:block;font-size:10px;line-height:1.5;color:#7f6d7c;margin-top:10px}
+.vyra-payment-lab-result{display:grid;gap:6px;margin-top:12px;border-radius:10px;padding:13px;background:#d4f9f1;font-size:11px;overflow-wrap:anywhere}
+.vyra-payment-lab-error{font-size:12px;margin:14px 0 0;color:#b92c40;font-weight:700}
+.vyra-payment-lab-footer{display:flex;align-items:center;gap:8px;margin-top:18px;font-size:11px;color:#73626d}
+.vyra-payment-lab-footer svg{flex:none}
+@media(max-width:800px){.vyra-payment-lab-grid{grid-template-columns:1fr}.vyra-payment-lab-head{flex-direction:column}.vyra-payment-lab{padding:16px}.vyra-payment-lab-card p{min-height:0}}

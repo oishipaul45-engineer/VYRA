@@ -133,7 +133,7 @@ async def vyra_security_headers(request: Request, call_next):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Referrer-Policy"] = "no-referrer"
-    if request.url.path.startswith(("/auth/", "/workspace/")):
+    if request.url.path.startswith(("/auth/", "/workspace/", "/payments/")):
         response.headers["Cache-Control"] = "no-store"
     return response
 
@@ -457,3 +457,12 @@ def restore_workspace(body: WorkspaceRestore, user=Depends(current_user)):
         user['id'], body.version,
         json.dumps(validated.model_dump(), ensure_ascii=False)
     )
+
+
+# VYRA merchant sandbox + partner-gated P2P foundation. TEST ONLY.
+from payment_foundation import build_payment_router
+app.include_router(build_payment_router(connect, current_user))
+
+# VYRA Core 1.1 - test merchant checkout router
+from vyra_checkout_bridge import build_router as build_checkout_bridge
+app.include_router(build_checkout_bridge(current_user))
