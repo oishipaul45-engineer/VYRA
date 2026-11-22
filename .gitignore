@@ -41,3 +41,19 @@ backup-*/
 *.log
 *.pem
 *.key
+
+# VYRA authentication dev files
+backend/.env
+backend/.venv/
+backend/*.sqlite3
+backend/__pycache__/
+backup-before-auth-*/
+setup_vyra_auth.py
+backend/.venv/
+backend/.env
+*.sqlite3
+*.db
+*.bak
+backup-before-*/
+__pycache__/
+*.pyc
