@@ -23,7 +23,7 @@ SECRET = os.getenv("VYRA_JWT_SECRET", "")
 if len(SECRET) < 32:
     raise RuntimeError("Missing or weak VYRA_JWT_SECRET in backend/.env")
 
-DB_PATH = BASE_DIR / "vyra_users.sqlite3"
+DB_PATH = Path(os.getenv("VYRA_DB_PATH", str(BASE_DIR / "vyra_users.sqlite3")))
 
 def connect():
     db = sqlite3.connect(DB_PATH, timeout=10)
@@ -316,6 +316,20 @@ class WorkspaceState(BaseModel):
     reducedMotion: bool
     hideAmounts: bool
 
+# VYRA PERSISTENCE V2 â€” validate stable identifiers without changing legacy money values.
+    @model_validator(mode="after")
+    def unique_record_ids(self):
+        for label, items in (("transactions", self.transactions), ("vaults", self.vaults), ("circles", self.circles)):
+            ids = [item.id for item in items]
+            if len(ids) != len(set(ids)):
+                raise ValueError(f"Duplicate {label} IDs are not allowed")
+        for circle in self.circles:
+            ledger = circle.ledger or []
+            ids = [expense.id for expense in ledger]
+            if len(ids) != len(set(ids)):
+                raise ValueError(f"Duplicate expense IDs in circle {circle.id}")
+        return self
+
 class WorkspaceWrite(BaseModel):
     version: int = Field(ge=1)
     state: WorkspaceState
@@ -327,6 +341,20 @@ with connect() as db:
             payload TEXT NOT NULL,
             version INTEGER NOT NULL DEFAULT 1,
             updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    db.commit()
+
+# Prior workspace snapshots, committed atomically with the replacement workspace.
+# Retains the latest 25 versions per account, not a payment ledger or audit guarantee.
+with connect() as db:
+    db.execute("""
+        CREATE TABLE IF NOT EXISTS workspace_revisions (
+            user_id INTEGER NOT NULL,
+            version INTEGER NOT NULL,
+            payload TEXT NOT NULL,
+            saved_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (user_id, version)
         )
     """)
     db.commit()
@@ -355,17 +383,77 @@ def initialize_workspace(body: WorkspaceState, user=Depends(current_user)):
 def get_workspace(user=Depends(current_user)):
     return read_workspace(user['id'])
 
+def commit_workspace(user_id: int, expected_version: int, payload: str):
+    """Optimistic update + previous version snapshot in one SQLite transaction."""
+    with connect() as db:
+        old = db.execute(
+            "SELECT payload, version FROM workspaces WHERE user_id = ?",
+            (user_id,)
+        ).fetchone()
+        if old is None or old["version"] != expected_version:
+            raise HTTPException(status_code=409, detail="Workspace changed in another session; reload latest data")
+        cur = db.execute(
+            """UPDATE workspaces SET payload = ?, version = version + 1,
+               updated_at = CURRENT_TIMESTAMP WHERE user_id = ? AND version = ?""",
+            (payload, user_id, expected_version)
+        )
+        if cur.rowcount != 1:
+            raise HTTPException(status_code=409, detail="Workspace changed in another session; reload latest data")
+        db.execute(
+            "INSERT INTO workspace_revisions (user_id, version, payload) VALUES (?, ?, ?)",
+            (user_id, expected_version, old["payload"])
+        )
+        db.execute(
+            """DELETE FROM workspace_revisions WHERE user_id = ? AND version NOT IN (
+                SELECT version FROM workspace_revisions WHERE user_id = ?
+                ORDER BY version DESC LIMIT 25
+            )""",
+            (user_id, user_id)
+        )
+        db.commit()
+    return {"version": expected_version + 1}
+
 @app.put('/workspace/me')
 def save_workspace(body: WorkspaceWrite, user=Depends(current_user)):
     data = json.dumps(body.state.model_dump(), ensure_ascii=False)
+    return commit_workspace(user['id'], body.version, data)
+
+@app.get('/workspace/me/revisions')
+def list_workspace_revisions(user=Depends(current_user)):
     with connect() as db:
-        cur = db.execute(
-            """UPDATE workspaces SET payload = ?, version = version + 1,
-               updated_at = CURRENT_TIMESTAMP
-               WHERE user_id = ? AND version = ?""",
-            (data, user['id'], body.version)
-        )
-        db.commit()
-        if cur.rowcount != 1:
-            raise HTTPException(status_code=409, detail="Workspace changed in another session; reload latest data")
-    return {"version": body.version + 1}
+        rows = db.execute(
+            "SELECT version, saved_at FROM workspace_revisions WHERE user_id = ? ORDER BY version DESC LIMIT 25",
+            (user['id'],)
+        ).fetchall()
+    return {"revisions": [{"version": r["version"], "saved_at": r["saved_at"]} for r in rows]}
+
+@app.get('/workspace/me/revisions/{revision_version}')
+def get_workspace_revision(revision_version: int, user=Depends(current_user)):
+    with connect() as db:
+        row = db.execute(
+            "SELECT version, payload FROM workspace_revisions WHERE user_id = ? AND version = ?",
+            (user['id'], revision_version)
+        ).fetchone()
+    if row is None:
+        raise HTTPException(status_code=404, detail="Workspace revision not found")
+    return {"version": row["version"], "state": json.loads(row["payload"])}
+
+class WorkspaceRestore(BaseModel):
+    version: int = Field(ge=1)
+    revision_version: int = Field(ge=1)
+
+@app.post('/workspace/me/restore')
+def restore_workspace(body: WorkspaceRestore, user=Depends(current_user)):
+    # Restore requires the current version, so a stale session cannot undo newer edits.
+    with connect() as db:
+        row = db.execute(
+            "SELECT payload FROM workspace_revisions WHERE user_id = ? AND version = ?",
+            (user['id'], body.revision_version)
+        ).fetchone()
+    if row is None:
+        raise HTTPException(status_code=404, detail="Workspace revision not found")
+    validated = WorkspaceState.model_validate(json.loads(row["payload"]))
+    return commit_workspace(
+        user['id'], body.version,
+        json.dumps(validated.model_dump(), ensure_ascii=False)
+    )
