@@ -125,3 +125,29 @@
     display: none !important;
   }
 }
+/* VYRA — ARROW CURSOR ONLY */
+.vyra-flip-ticket {
+  display: none !important;
+}
+
+.vyra-flip-cursor.is-action .vyra-flip-shape {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* VYRA — SMALL ELEGANT ARROW */
+.vyra-flip-shape {
+  width: 22px !important;
+  height: 25px !important;
+  top: -2px !important;
+  left: -2px !important;
+}
+
+.vyra-flip-ticket {
+  display: none !important;
+}
+
+.vyra-flip-cursor.is-action .vyra-flip-shape {
+  opacity: 1 !important;
+  transform: none !important;
+}
