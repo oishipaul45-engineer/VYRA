@@ -32,3 +32,12 @@ backup-*/
 *.log
 *.pem
 *.key
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+backup-*/
+*.log
+*.pem
+*.key
