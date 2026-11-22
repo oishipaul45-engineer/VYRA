@@ -1,0 +1,59 @@
+/* VYRA / Pay Studio 2.0 - scoped to the Pay page */
+.vyra-pay-extras{margin-top:30px;display:grid;gap:22px;color:#24152f}
+.vyra-pay-heading{display:flex;align-items:end;justify-content:space-between;gap:15px;padding:20px 4px 4px}
+.vyra-pay-eyebrow,.vyra-pay-minihead{font:800 10px 'Space Grotesk',sans-serif;letter-spacing:.16em}
+.vyra-pay-eyebrow{color:#ec5738}
+.vyra-pay-heading h2{font:900 clamp(28px,4vw,49px)/1 'Space Grotesk',sans-serif;letter-spacing:-.065em;margin:10px 0}
+.vyra-pay-heading h2 span{color:#ff633e}
+.vyra-pay-heading p{font-size:12px;color:#776b74;max-width:560px}
+.vyra-pay-count{font:900 48px 'Space Grotesk',sans-serif;color:#24152f;line-height:1;display:grid;text-align:right}
+.vyra-pay-count small{font-size:9px;letter-spacing:.2em;color:#ad8c9f}
+.vyra-pay-recipient-wrap,.vyra-pay-history{border:2px solid #24152f;border-radius:25px;padding:24px;background:#fffaf1;box-shadow:8px 8px 0 #24152f12;min-width:0}
+.vyra-pay-minihead{display:flex;justify-content:space-between;gap:16px;color:#aa7d90;margin-bottom:18px}
+.vyra-pay-recipients{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.vyra-pay-contact{display:flex;gap:12px;align-items:center;min-width:0;background:#f7eddf;border:1px solid #dccfc5;border-radius:18px;padding:12px;text-align:left;color:inherit;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s}
+.vyra-pay-contact:hover{transform:translateY(-3px);box-shadow:0 8px 17px #24152f13;border-color:#ff633e}
+.vyra-pay-avatar{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:14px;background:var(--pay-hue);font:900 18px 'Space Grotesk',sans-serif;color:#24152f}
+.vyra-pay-person{min-width:0;display:grid;gap:4px;flex:1}
+.vyra-pay-person strong{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vyra-pay-person small{font-size:10px;color:#857882}
+.vyra-pay-contact>svg{flex:none;color:#ec5738}
+.vyra-pay-toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.vyra-pay-search{display:flex;align-items:center;gap:9px;flex:1;min-width:220px;border:1px solid #dfd0c5;background:#fffdf8;border-radius:14px;padding:0 13px;color:#ec5738}
+.vyra-pay-search input{width:100%;background:transparent;color:#24152f;border:0;outline:0;font-size:12px;padding:15px 0}
+.vyra-pay-filters{display:flex;gap:3px;align-items:center;padding:5px;background:#f3e7d9;border-radius:14px;flex-wrap:wrap}
+.vyra-pay-filters>svg{margin:0 6px;color:#bc9188}
+.vyra-pay-filters button{background:transparent;color:#625262;border:0;border-radius:10px;padding:9px 12px;font-size:11px;font-weight:800;cursor:pointer}
+.vyra-pay-filters button.active{background:#45e6d0;color:#24152f}
+.vyra-pay-list{max-height:480px;overflow-y:auto}
+.vyra-pay-record{width:100%;display:flex;align-items:center;gap:14px;padding:16px 3px;border:0;border-bottom:1px solid #e9dfd6;background:transparent;text-align:left;color:#24152f;cursor:pointer}
+.vyra-pay-record:hover{background:#ffe9e240}
+.vyra-pay-direction{height:46px;width:46px;flex:none;display:grid;place-items:center;border-radius:16px;background:#ffdfd3;color:#df543c}
+.vyra-pay-direction.incoming{background:#c3f9ef;color:#147d6e}
+.vyra-pay-record-name{min-width:0;flex:1;display:grid;gap:5px}
+.vyra-pay-record-name strong{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vyra-pay-record-name small{font-size:10px;color:#8c7d85}
+.vyra-pay-record-amount{display:grid;gap:5px;text-align:right;font-size:14px;font-weight:800;white-space:nowrap}
+.vyra-pay-record-amount small{display:flex;align-items:center;justify-content:end;gap:4px;color:#ef654f;font-size:9px;letter-spacing:.08em}
+.vyra-pay-empty{text-align:center;padding:40px 12px;color:#756a73;font-size:13px}
+.vyra-pay-modal-backdrop{position:fixed;inset:0;z-index:100;background:#170f21b3;display:grid;place-items:center;padding:16px;overflow:auto}
+.vyra-pay-receipt{width:min(100%,480px);max-height:min(90vh,780px);overflow-y:auto;background:#fffaf0;color:#24152f;border:3px solid #24152f;border-radius:25px;padding:24px;box-shadow:14px 14px 0 #ff78b9}
+.vyra-pay-receipt-top{display:flex;justify-content:space-between;align-items:center;font:900 10px 'Space Grotesk',sans-serif;letter-spacing:.15em}
+.vyra-pay-receipt-top button{border:0;border-radius:10px;background:#efe2dc;display:grid;place-items:center;padding:8px;cursor:pointer;color:#24152f}
+.vyra-pay-receipt-mark{display:grid;place-items:center;width:70px;height:70px;border-radius:20px;background:#45e6d0;margin:23px auto 14px}
+.vyra-pay-receipt-sub{display:block;text-align:center;font:800 10px 'Space Grotesk';letter-spacing:.16em;color:#d15b45}
+.vyra-pay-receipt h2{text-align:center;font:900 clamp(31px,6vw,50px) 'Space Grotesk',sans-serif;margin:7px 0;letter-spacing:-.05em}
+.vyra-pay-receipt-name{text-align:center;font-size:14px;font-weight:800;margin:0 0 24px}
+.vyra-pay-receipt-lines{border-top:1px dashed #b6a6b3;border-bottom:1px dashed #b6a6b3;padding:10px 0}
+.vyra-pay-receipt-lines>div{display:flex;justify-content:space-between;gap:14px;align-items:start;padding:10px 0;font-size:12px}
+.vyra-pay-receipt-lines span{color:#857681;flex:none}
+.vyra-pay-receipt-lines strong{text-align:right;overflow-wrap:anywhere;min-width:0}
+.vyra-pay-copy{display:flex;justify-content:center;align-items:center;gap:9px;width:100%;padding:15px;margin:20px 0;border:0;border-radius:13px;background:#24152f;color:#fffaf0;cursor:pointer;font-weight:900;font-size:12px}
+.vyra-pay-receipt-warning{display:flex;align-items:start;gap:9px;background:#ffe5d9;padding:12px;border-radius:11px;font-size:10px;line-height:1.5;color:#754940}
+.vyra-pay-receipt-warning svg{flex:none}
+.vyra-pay-contact:focus-visible,.vyra-pay-filters button:focus-visible,.vyra-pay-record:focus-visible,.vyra-pay-copy:focus-visible{outline:3px solid #45e6d0;outline-offset:3px}
+@media(max-width:950px){.vyra-pay-recipients{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.vyra-pay-recipients{grid-template-columns:1fr}.vyra-pay-recipient-wrap,.vyra-pay-history{padding:16px}.vyra-pay-minihead{font-size:8px}.vyra-pay-filters{width:100%;justify-content:space-around}.vyra-pay-filters button{padding:8px}.vyra-pay-heading h2{font-size:30px}.vyra-pay-count{font-size:32px}.vyra-pay-record-amount{font-size:12px}.vyra-pay-record-name strong{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.vyra-pay-contact{transition:none}}
+.vyra-pay-jump{display:flex;margin:-6px 0 22px auto;padding:12px 18px;border:2px solid #24152f;border-radius:99px;background:#45e6d0;color:#24152f;font:900 11px 'Space Grotesk',sans-serif;letter-spacing:.08em;cursor:pointer}
+.vyra-pay-jump:hover{background:#ff78b9}
