@@ -1,0 +1,17 @@
+/* Isolated styles for Flow's interactive 3D artwork. */
+.vyra-flow-galaxy { position:relative; isolation:isolate; width:100%; height:100%; min-height:340px; overflow:hidden; }
+.vyra-flow-galaxy canvas { position:relative; z-index:1; outline:none; }
+.vyra-flow-galaxy-glow { position:absolute; inset:10%; background:radial-gradient(ellipse at center,#45e6d02d 0%,#ff633e10 40%,transparent 70%); filter:blur(25px); pointer-events:none; }
+.vyra-flow-caption { position:absolute; left:18px; right:18px; top:17px; z-index:2; display:flex; gap:10px; justify-content:space-between; font:800 9px 'Space Grotesk',sans-serif; letter-spacing:.13em; color:#d9cde2; pointer-events:none; }
+.vyra-flow-caption span:last-child { color:#45e6d0; }
+.vyra-flow-chiplist { position:absolute; z-index:3; bottom:14px; left:15px; right:15px; display:flex; justify-content:center; flex-wrap:wrap; gap:5px; }
+.vyra-flow-chiplist button { background:#1d1728d9; border:1px solid #ffffff2f; border-radius:999px; padding:6px 9px; color:#f9efff; font:700 10px 'DM Sans',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:background .2s,border-color .2s,transform .2s; }
+.vyra-flow-chiplist button:hover { border-color:#45e6d0; transform:translateY(-2px); }
+.vyra-flow-chiplist button.selected { background:#45e6d0; border-color:#45e6d0; color:#24152f; }
+.vyra-flow-chiplist i { width:7px; height:7px; flex:none; border-radius:50%; }
+.vyra-flow-chiplist button:focus-visible { outline:2px solid #ff78b9; outline-offset:3px; }
+.vyra-flow-empty { color:#f6dfeb; font:600 11px 'DM Sans',sans-serif; text-align:center; max-width:230px; }
+.vyra-flow-fallback { height:100%; display:grid; place-items:center; font:900 26px 'Space Grotesk',sans-serif; color:#45e6d0; }
+@media(max-width:900px) { .vyra-flow-galaxy { min-height:320px; } }
+@media(max-width:480px) { .vyra-flow-galaxy { min-height:330px; } .vyra-flow-caption span:last-child { display:none; } .vyra-flow-chiplist button { font-size:9px; padding:5px 7px; } }
+@media(prefers-reduced-motion:reduce) { .vyra-flow-chiplist button { transition:none; } }

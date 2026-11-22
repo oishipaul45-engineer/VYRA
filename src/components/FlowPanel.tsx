@@ -1,5 +1,5 @@
+import FlowGalaxy, { flowColors } from './FlowGalaxy';
 import { useMemo, useState } from 'react';
-import { motion } from 'motion/react';
 import { ArrowDownRight, ArrowUpRight, ArrowLeftRight, TrendingDown, Wallet, Waves } from 'lucide-react';
 import type { Transaction } from '../data/demo';
 import './FlowPanel.css';
@@ -9,7 +9,7 @@ type Props = {
   formatMoney: (value: number) => string;
   reducedMotion: boolean;
 };
-const palette = ['#d5ff3f', '#12bda8', '#ff9b3d', '#f7db75', '#ff5533', '#00cfb9'];
+const palette = flowColors;
 
 export default function FlowPanel({ transactions, formatMoney, reducedMotion }: Props) {
   const [selection, setSelection] = useState<string>('All');
@@ -26,24 +26,10 @@ export default function FlowPanel({ transactions, formatMoney, reducedMotion }: 
   const select = (category: string) => setSelection(old => old === category ? 'All' : category);
 
   return <div className="flow-page">
-    <div className="page-heading"><div><div className="eyebrow">FINANCIAL MOTION / REAL DATA</div><h1>Follow the <em>flow.</em></h1><p>Trace where your money goes. No planets, just clarity in motion.</p></div><span className="flow-page-symbol"><Waves size={32}/></span></div>
+    <div className="page-heading"><div><div className="eyebrow">FINANCIAL MOTION / REAL DATA</div><h1>Follow the <em>flow.</em></h1><p>Explore your spending galaxy. Select a constellation to see every transaction behind it.</p></div><span className="flow-page-symbol"><Waves size={32}/></span></div>
     <section className="flow-overview" aria-label="Demo money flow overview">
-      <div className="flow-hero-copy"><span className="eyebrow">OUTGOING / ALL RECORDED DEMO DATA</span><div className="flow-hero-total">{formatMoney(spent)}</div><p>Every stream represents a spending category. Select any stream to inspect its transactions.</p><div className="flow-hero-metrics"><div><ArrowDownRight size={17}/><span>Outflow</span><b>{formatMoney(spent)}</b></div><div><ArrowUpRight size={17}/><span>Credits</span><b>{formatMoney(income)}</b></div><div><ArrowLeftRight size={17}/><span>Net recorded</span><b>{formatMoney(income - spent)}</b></div></div></div>
-      <div className="flow-art" aria-label="Abstract flowing lines representing the distribution of demo spending">
-        <div className="flow-art-glow"/>
-        <svg viewBox="0 0 620 330" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Layered colorful money flows">
-          <defs>{palette.map((color,i) => <linearGradient id={`flow-gradient-${i}`} key={i} x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor={color} stopOpacity=".10"/><stop offset="50%" stopColor={color} stopOpacity=".94"/><stop offset="100%" stopColor={color} stopOpacity=".20"/></linearGradient>)}</defs>
-          {Array.from({length: 12}, (_,i) => {
-            const y = 80 + i * 15;
-            const d = `M -15 ${y + 70} C 150 ${y-110}, 285 ${y+140}, 630 ${y-65}`;
-            return <motion.path key={i} d={d} fill="none" stroke={`url(#flow-gradient-${i%palette.length})`} strokeWidth={i%3===0 ? 8 : 3} strokeLinecap="round" initial={reducedMotion ? false : {pathLength:0,opacity:0}} animate={{pathLength:1,opacity:1}} transition={{duration:1.1,delay:i*.055}}/>;
-          })}
-          <circle cx="282" cy="152" r="56" fill="#d5ff3f" opacity=".08"/>
-          <circle cx="282" cy="152" r="21" fill="#d5ff3f" opacity=".32"/>
-          <circle cx="282" cy="152" r="7" fill="#f6f3ff"/>
-        </svg>
-        <span className="flow-art-caption">VYRA / MONEY IN MOTION</span>
-      </div>
+      <div className="flow-hero-copy"><span className="eyebrow">OUTGOING / ALL RECORDED DEMO DATA</span><div className="flow-hero-total">{formatMoney(spent)}</div><p>Each orbiting world represents a spending category. Select a planet or category to inspect your records.</p><div className="flow-hero-metrics"><div><ArrowDownRight size={17}/><span>Outflow</span><b>{formatMoney(spent)}</b></div><div><ArrowUpRight size={17}/><span>Credits</span><b>{formatMoney(income)}</b></div><div><ArrowLeftRight size={17}/><span>Net recorded</span><b>{formatMoney(income - spent)}</b></div></div></div>
+      <div className="flow-art flow-art-galaxy"><FlowGalaxy groups={groups} selection={selection} onSelect={select} reducedMotion={reducedMotion} formatMoney={formatMoney}/></div>
     </section>
     <div className="flow-content-grid">
       <section className="panel flow-breakdown"><div className="panel-heading"><div><span className="eyebrow">WHERE IT GOES</span><h2>Spending streams</h2></div><span className="flow-minitag">{groups.length} categories</span></div>
