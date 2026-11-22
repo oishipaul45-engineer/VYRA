@@ -1,6 +1,6 @@
-import { useEffect, useState, type ReactNode, type FormEvent } from 'react';
+import { lazy, Suspense, useEffect, useState, type ReactNode, type FormEvent } from 'react';
 import { ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
-import MoneyCore from './MoneyCore';
+const MoneyCore = lazy(() => import('./MoneyCore'));
 import './vyra-auth.css';
 
 type User = { id: number; name: string; email: string };
@@ -48,7 +48,7 @@ export default function AuthGate({ children }: { children: (user: User, onLogout
   return <main className="vyra-auth">
     <header className="vyra-auth-head"><span>VYRA<span className="vyra-auth-dot">.</span></span><small>EDITION / 02 &nbsp; — &nbsp; PRIVATE ACCESS</small></header>
     <div className="vyra-auth-layout">
-      <section className="vyra-auth-art"><div className="vyra-auth-grid"/><div className="vyra-auth-card"><MoneyCore tone="#ff7040" reducedMotion={false}/></div><div className="vyra-auth-art-label">MONEY<br/>IN MOTION<span> / 001</span></div><div className="vyra-auth-art-footer">A DIFFERENT KIND OF FINANCIAL SPACE.</div></section>
+      <section className="vyra-auth-art"><div className="vyra-auth-grid"/><div className="vyra-auth-card"><Suspense fallback={<div className="vyra-scene-loading">V / MONEY IN MOTION</div>}><MoneyCore tone="#ff7040" reducedMotion={false}/></Suspense></div><div className="vyra-auth-art-label">MONEY<br/>IN MOTION<span> / 001</span></div><div className="vyra-auth-art-footer">A DIFFERENT KIND OF FINANCIAL SPACE.</div></section>
       <section className="vyra-auth-copy"><div className="vyra-auth-eyebrow"><Sparkles size={15}/> THE FUTURE FEELS PERSONAL</div><h1>{mode === 'signup' ? <>MAKE IT<br/><em>YOURS.</em></> : <>WELCOME<br/><em>BACK.</em></>}</h1><p>{mode === 'signup' ? 'Your space. Your goals. Your money story — currently in demo mode.' : 'Sign in to your VYRA space and keep exploring.'}</p>
         <div className="vyra-auth-switch"><button type="button" className={mode === 'signup' ? 'active' : ''} onClick={() => { setMode('signup'); setError(''); }}>Create account</button><button type="button" className={mode === 'login' ? 'active' : ''} onClick={() => { setMode('login'); setError(''); }}>Sign in</button></div>
         <form onSubmit={submit} className="vyra-auth-form">{mode === 'signup' && <label>Your name<input autoComplete="name" minLength={2} maxLength={60} placeholder="What should we call you?" value={name} onChange={e => setName(e.target.value)} required/></label>}<label>Email address<input type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} required/></label><label>Password<input type="password" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} minLength={mode === 'signup' ? 10 : undefined} placeholder={mode === 'signup' ? 'At least 10 characters' : 'Your password'} value={password} onChange={e => setPassword(e.target.value)} required/></label>{error && <div className="vyra-auth-error" role="alert">{error}</div>}<button type="submit" disabled={busy}>{busy ? 'WORKING...' : mode === 'signup' ? 'CREATE YOUR SPACE' : 'ENTER VYRA'} <ArrowRight size={18}/></button></form>

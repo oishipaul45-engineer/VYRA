@@ -1,0 +1,44 @@
+/* VYRA performance/mobile edition: scoped layout updates, no redesign. */
+.vyra-page-loading {
+  min-height: 210px;
+  display: grid;
+  place-items: center;
+  padding: 30px;
+  color: #24152f;
+  font: 800 12px 'Space Grotesk', sans-serif;
+  letter-spacing: .16em;
+  text-align: center;
+}
+.vyra-scene-window { min-height: 265px; min-width: 0; }
+.vyra-scene-loading {
+  min-height: 235px;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: 24px;
+  color: #45e6d0;
+  background: radial-gradient(circle at 50% 35%, #463451, #24152f 70%);
+  font: 800 11px 'Space Grotesk', sans-serif;
+  letter-spacing: .15em;
+  text-align: center;
+}
+@media (max-width: 760px) {
+  .vyra-scene-window { min-height: 235px; }
+  .app-shell .top-right { min-width: 0; flex-wrap: wrap; justify-content: flex-end; gap: 5px; }
+  .app-shell .top-right .demo-pill { white-space: nowrap; font-size: 8px; }
+  .app-shell .content { min-width: 0; overflow-wrap: anywhere; }
+  .app-shell .panel, .app-shell .hero-card { min-width: 0; }
+  .app-shell .vault-form { flex-wrap: wrap; }
+  .app-shell .vault-form input { flex: 1 1 145px; }
+  .app-shell .vault-form button { min-height: 44px; }
+  .app-shell .new-vault form { flex-wrap: wrap; }
+  .app-shell .new-vault form input { min-width: 0; }
+}
+@media (max-width: 420px) {
+  .app-shell .topbar { padding-inline: 12px; }
+  .app-shell .top-right .demo-pill { font-size: 7px; padding: 6px; }
+  .app-shell .breadcrumbs { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vyra-page-loading, .vyra-scene-loading { animation: none !important; }
+}
