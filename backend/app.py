@@ -1,4 +1,4 @@
-﻿import os
+import os
 import sqlite3
 import hashlib
 import hmac
@@ -75,7 +75,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
-        "http://localhost:5175",
+        "http://localhost:5175", "http://localhost:5176", "http://127.0.0.1:5176",
         "http://127.0.0.1:5175"
     ],
     allow_credentials=False,

@@ -1,6 +1,6 @@
 /* VYRA / VOLT EDITORIAL DESIGN - do not remove existing component CSS */
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700;800&display=swap');
-:root { --v-ink:#111717; --v-cream:#f7f4e9; --v-orange:#ff5533; --v-lime:#d5ff3f; --v-cyan:#00cfb9; --v-line:#c9c9bc; color:var(--v-ink);background:var(--v-cream); }
+:root { --v-ink:#111717; --v-cream:#f7f4e9; --v-orange:#ff5533; --v-lime:#45E6D0; --v-cyan:#00cfb9; --v-line:#c9c9bc; color:var(--v-ink);background:var(--v-cream); }
 body,.app-shell{background:var(--v-cream)!important;color:var(--v-ink)!important}
 h1,h2,h3,.brand,.welcome-logo{font-family:'Archivo Black','Space Grotesk',sans-serif!important;letter-spacing:-.052em}
 h1{font-weight:900!important}h1 em,.page-heading h1 em{font-style:normal;color:var(--v-orange)!important}
@@ -43,7 +43,7 @@ p,.page-heading p,.action-card p,.insight-card p,.panel p,.flow-hero-copy p{colo
 .notice-inline{background:#e0ede3!important;color:#35483e!important}.notice-inline svg{color:#087d5c!important}
 .mini-core{background:#caf3d9!important;border:2px solid var(--v-ink)!important;border-radius:16px!important}
 .feature-banner{background:var(--v-cyan)!important;color:var(--v-ink)!important}.feature-banner p{color:#163d37!important}.ring-graphic i{border-color:var(--v-ink)!important}.ring-graphic i:nth-child(2){border-color:var(--v-orange)!important}.ring-graphic i:nth-child(3){border-color:var(--v-lime)!important}
-.circle-badge{background:var(--v-lime)!important;color:var(--v-ink)!important}.circle-balance{background:#eaf0db!important;color:var(--v-ink)!important}.vault-art{background:linear-gradient(145deg,#b2f5cd,#e9ffa7)!important}.vault-halo{border-color:var(--v-orange)!important}.vault-amount span{color:#53665b!important}
+.circle-badge{background:var(--v-lime)!important;color:var(--v-ink)!important}.circle-balance{background:#eaf0db!important;color:var(--v-ink)!important}.vault-art{background:linear-gradient(145deg,#b2f5cd,#CEF9F2)!important}.vault-halo{border-color:var(--v-orange)!important}.vault-amount span{color:#53665b!important}
 .tabs,.core-switch{box-shadow:none!important}.settings-modal{background:var(--v-cream)!important;color:var(--v-ink)!important;border:2px solid var(--v-ink)!important}.setting-row{border-color:#bcc9ba!important;color:var(--v-ink)!important}.setting-row input{accent-color:var(--v-orange)!important}.muted-small{color:#53665b!important}
 .toast{background:var(--v-ink)!important;color:white!important;border:2px solid var(--v-lime)!important}.toast svg{color:var(--v-lime)!important}
 /* Distinct editorial welcome rather than a dark generic fintech splash */
@@ -64,9 +64,9 @@ p,.page-heading p,.action-card p,.insight-card p,.panel p,.flow-hero-copy p{colo
 .flow-overview{background:var(--v-ink)!important;color:var(--v-cream)!important}
 .flow-overview .eyebrow,.flow-overview .caption{color:var(--v-lime)!important}
 .flow-hero-copy p{color:#c4d9c8!important}.flow-hero-metrics span,.flow-minitag{color:#a7bbb1!important}
-.flow-art-glow{background:#ff55334d!important}.flow-art svg{filter:drop-shadow(0 0 12px #d5ff3f3c)!important}
+.flow-art-glow{background:#ff55334d!important}.flow-art svg{filter:drop-shadow(0 0 12px #45E6D03c)!important}
 .flow-page-symbol{background:var(--v-orange)!important;color:var(--v-ink)!important;border-color:var(--v-ink)!important}
-.flow-stream{color:var(--v-ink)!important}.flow-stream:hover,.flow-stream.active{background:#d5ff3f66!important;border-color:var(--v-ink)!important}.flow-stream-name small{color:#596c5f!important}.flow-stream-track{background:#dfe3d7!important}
+.flow-stream{color:var(--v-ink)!important}.flow-stream:hover,.flow-stream.active{background:#45E6D066!important;border-color:var(--v-ink)!important}.flow-stream-name small{color:#596c5f!important}.flow-stream-track{background:#dfe3d7!important}
 .flow-rail{background:#dfe3d7!important}.flow-disclaimer{color:#50665a!important}
 :focus-visible{outline:3px solid var(--v-orange)!important;outline-offset:3px!important}
 @media(max-width:1150px){.sidebar{width:205px}.main-shell{margin-left:205px;width:calc(100% - 205px)}.hero-grid{grid-template-columns:1fr!important}}
