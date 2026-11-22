@@ -1,0 +1,75 @@
+/* VYRA / VOLT EDITORIAL DESIGN - do not remove existing component CSS */
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700;800&display=swap');
+:root { --v-ink:#111717; --v-cream:#f7f4e9; --v-orange:#ff5533; --v-lime:#d5ff3f; --v-cyan:#00cfb9; --v-line:#c9c9bc; color:var(--v-ink);background:var(--v-cream); }
+body,.app-shell{background:var(--v-cream)!important;color:var(--v-ink)!important}
+h1,h2,h3,.brand,.welcome-logo{font-family:'Archivo Black','Space Grotesk',sans-serif!important;letter-spacing:-.052em}
+h1{font-weight:900!important}h1 em,.page-heading h1 em{font-style:normal;color:var(--v-orange)!important}
+p,.page-heading p,.action-card p,.insight-card p,.panel p,.flow-hero-copy p{color:#4b5a55!important}
+.eyebrow,.caption,.card-label{color:#a7391f!important;font-weight:800!important;letter-spacing:.15em}
+.sidebar{background:var(--v-ink)!important;border-right:0!important;width:250px;padding-top:32px}
+.main-shell{margin-left:250px;width:calc(100% - 250px)}
+.brand{color:var(--v-cream)!important;letter-spacing:.045em!important;font-size:34px!important}
+.brand-dot{color:var(--v-lime)!important}.brand small{font-family:'DM Sans',sans-serif!important;color:#91aaa2!important;letter-spacing:.19em!important}
+.nav-button{color:#b7c6bd!important;border-radius:12px!important;font-weight:700}
+.nav-button.active,.nav-button:hover{background:var(--v-lime)!important;color:var(--v-ink)!important}
+.nav-button.active svg,.nav-button:hover svg{color:var(--v-ink)!important}.nav-light{background:var(--v-orange)!important}
+.side-art{height:160px!important;padding:20px!important;background:linear-gradient(145deg,var(--v-orange),#ffb66c)!important;color:var(--v-ink)!important;font:900 58px 'Archivo Black',sans-serif!important;border-radius:9px 36px 9px 9px!important;box-shadow:none!important;overflow:hidden}
+.side-art span{font:800 13px 'DM Sans',sans-serif!important;color:var(--v-ink)!important;margin-top:4px!important;letter-spacing:-.01em}
+.profile{border-color:#3d4b46!important;color:var(--v-cream)}.profile small{color:#acc1b8!important}.avatar{background:var(--v-orange)!important;color:var(--v-ink)!important}
+.topbar{background:var(--v-cream)!important;border-bottom:2px solid var(--v-ink)!important}
+.breadcrumbs{color:#5c6960!important;font-weight:800}.breadcrumbs span{color:var(--v-ink)!important}
+.demo-pill{background:var(--v-lime)!important;border:2px solid var(--v-ink)!important;color:var(--v-ink)!important;box-shadow:3px 3px 0 var(--v-ink)}.demo-pill span{background:var(--v-orange)!important}
+.icon-button{color:var(--v-ink)!important}.content{max-width:1800px}.page-heading{margin-bottom:30px}
+.page-heading h1{font-size:clamp(39px,4.5vw,78px)!important;line-height:1.04!important}
+.hero-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)!important;gap:16px!important}
+.hero-card,.action-card,.insight-card,.panel,.feature-banner,.flow-overview{border:2px solid var(--v-ink)!important;border-radius:16px!important;box-shadow:5px 5px 0 var(--v-ink)!important}
+.hero-card{background:var(--v-lime)!important;min-height:500px!important;color:var(--v-ink)!important;isolation:isolate}
+.hero-card::before{content:'V / 01';position:absolute;right:-18px;bottom:100px;font:900 126px 'Archivo Black',sans-serif;color:#1117170b;transform:rotate(-90deg);pointer-events:none;z-index:-1}
+.hero-card-top h2{color:#1a3027!important}.hero-amount{font-size:clamp(41px,5vw,67px)!important;color:var(--v-ink)!important;font-weight:900!important}
+.hero-canvas{height:290px!important}.core-canvas{filter:drop-shadow(12px 17px 20px #0d221b3d)}
+.core-switch,.tabs{background:var(--v-ink)!important;border:0!important;border-radius:11px!important;max-width:400px!important}
+.core-switch button,.tabs button{color:#d7e6db!important;font-weight:700}.core-switch .selected,.tabs .selected{background:var(--v-cream)!important;color:var(--v-ink)!important}
+.action-card{background:var(--v-orange)!important;color:var(--v-ink)!important}.action-card h2{font-size:clamp(25px,2.6vw,40px)!important;letter-spacing:-.05em!important}.action-card p{color:#3f241d!important}
+.action-grid button{background:var(--v-cream)!important;color:var(--v-ink)!important;border:2px solid var(--v-ink)!important;border-radius:12px!important;font-weight:800;transition:transform .2s,box-shadow .2s!important}
+.action-grid button span{color:var(--v-ink)!important}.action-grid button:hover{transform:translateY(-4px);box-shadow:3px 4px 0 var(--v-ink)}
+.insight-card{background:#c8ece4!important;color:var(--v-ink)!important}.insight-icon{background:var(--v-ink)!important;color:var(--v-lime)!important}.insight-card h3{color:var(--v-ink)!important;font-size:clamp(19px,2vw,27px)!important}
+.panel{background:#fffdf6!important;color:var(--v-ink)!important}.panel-heading h2,.panel h2,.panel h3{color:var(--v-ink)!important}.transaction{border-color:#d5dad0!important}.transaction-icon{background:#e2e9dd!important;color:var(--v-ink)!important}.transaction-info small,.goal-mini small,.circle-balance span{color:#53665b!important}.transaction b.positive{color:#087d5c!important}
+.text-link,.link-button,.flow-reset{color:#ba331b!important;font-weight:800!important}
+.progress{background:#d7dccf!important}.progress div{background:linear-gradient(90deg,var(--v-orange),#ffbf55)!important}
+.button-outline{background:var(--v-cream)!important;border:2px solid var(--v-ink)!important;color:var(--v-ink)!important;font-weight:800!important}
+.primary-button,.input-combo button,.vault-form button{background:var(--v-lime)!important;color:var(--v-ink)!important;border:2px solid var(--v-ink)!important;font-weight:900!important;box-shadow:4px 4px 0 var(--v-ink)!important}
+.primary-button:hover,.input-combo button:hover,.vault-form button:hover{background:#f3ff9f!important;transform:translate(-1px,-1px)}
+.form-stack label{color:var(--v-ink)!important;font-weight:800}.form-stack input,.new-vault input,.vault-form input,.input-combo input{background:#fffcf3!important;color:var(--v-ink)!important;border:2px solid #a2b0a3!important}.form-stack input:focus,.new-vault input:focus,.vault-form input:focus,.input-combo input:focus{border-color:var(--v-orange)!important;box-shadow:0 0 0 3px #ff55332c!important}
+.notice-inline{background:#e0ede3!important;color:#35483e!important}.notice-inline svg{color:#087d5c!important}
+.mini-core{background:#caf3d9!important;border:2px solid var(--v-ink)!important;border-radius:16px!important}
+.feature-banner{background:var(--v-cyan)!important;color:var(--v-ink)!important}.feature-banner p{color:#163d37!important}.ring-graphic i{border-color:var(--v-ink)!important}.ring-graphic i:nth-child(2){border-color:var(--v-orange)!important}.ring-graphic i:nth-child(3){border-color:var(--v-lime)!important}
+.circle-badge{background:var(--v-lime)!important;color:var(--v-ink)!important}.circle-balance{background:#eaf0db!important;color:var(--v-ink)!important}.vault-art{background:linear-gradient(145deg,#b2f5cd,#e9ffa7)!important}.vault-halo{border-color:var(--v-orange)!important}.vault-amount span{color:#53665b!important}
+.tabs,.core-switch{box-shadow:none!important}.settings-modal{background:var(--v-cream)!important;color:var(--v-ink)!important;border:2px solid var(--v-ink)!important}.setting-row{border-color:#bcc9ba!important;color:var(--v-ink)!important}.setting-row input{accent-color:var(--v-orange)!important}.muted-small{color:#53665b!important}
+.toast{background:var(--v-ink)!important;color:white!important;border:2px solid var(--v-lime)!important}.toast svg{color:var(--v-lime)!important}
+/* Distinct editorial welcome rather than a dark generic fintech splash */
+.welcome{background:var(--v-cream)!important;color:var(--v-ink)!important;padding:34px 4.5vw!important}
+.welcome:before{content:'VYRA / THE NEW MONEY CULTURE';position:absolute;top:0;right:0;background:var(--v-lime);color:var(--v-ink);padding:10px 23px;font:800 10px 'DM Sans',sans-serif;letter-spacing:.12em;transform:rotate(0);z-index:1}
+.welcome-logo{font-size:37px!important;letter-spacing:-.06em!important}.welcome-logo span{font:800 10px 'DM Sans',sans-serif!important;letter-spacing:.13em!important;color:var(--v-orange)!important;margin-left:10px}
+.welcome-main{grid-template-columns:1.06fr .94fr!important;gap:4vw!important;max-width:1550px!important}
+.welcome-visual{height:min(69vh,650px)!important;min-height:365px!important;background:var(--v-orange);border:3px solid var(--v-ink);border-radius:26px 110px 26px 26px;box-shadow:13px 13px 0 var(--v-ink);position:relative;overflow:hidden;padding:30px}
+.welcome-visual:before{content:'NOT YOUR TYPICAL BANKING APP';position:absolute;top:26px;left:26px;z-index:2;color:var(--v-ink);font:900 12px 'DM Sans',sans-serif;letter-spacing:.08em}
+.welcome-visual:after{content:'01 / MOVE DIFFERENT';position:absolute;bottom:24px;left:26px;z-index:2;color:var(--v-ink);font:900 11px 'DM Sans',sans-serif;letter-spacing:.11em}
+.welcome-visual .core-canvas{filter:drop-shadow(12px 20px 16px #34221945)}
+.welcome-copy{max-width:650px!important}.welcome-copy .eyebrow{display:inline-block;background:var(--v-lime);border:2px solid var(--v-ink);color:var(--v-ink)!important;padding:9px 13px;letter-spacing:.11em}
+.welcome-copy h1{font-size:clamp(55px,6vw,108px)!important;line-height:.98!important;letter-spacing:-.075em!important;margin:25px 0!important;color:var(--v-ink)!important}
+.welcome-copy h1 em{color:var(--v-orange)!important}.welcome-copy p{font-size:clamp(16px,1.45vw,20px)!important;line-height:1.45!important;max-width:540px!important}
+.welcome-copy form label{color:var(--v-ink)!important;font-weight:800!important}.input-combo button{padding:0 22px!important;border-radius:12px!important}.welcome-copy small{color:#52665b!important}
+.welcome-bottom{color:#536b5b!important;font-weight:800!important}
+/* Flow page should feel like a visual instrument, not planets */
+.flow-overview{background:var(--v-ink)!important;color:var(--v-cream)!important}
+.flow-overview .eyebrow,.flow-overview .caption{color:var(--v-lime)!important}
+.flow-hero-copy p{color:#c4d9c8!important}.flow-hero-metrics span,.flow-minitag{color:#a7bbb1!important}
+.flow-art-glow{background:#ff55334d!important}.flow-art svg{filter:drop-shadow(0 0 12px #d5ff3f3c)!important}
+.flow-page-symbol{background:var(--v-orange)!important;color:var(--v-ink)!important;border-color:var(--v-ink)!important}
+.flow-stream{color:var(--v-ink)!important}.flow-stream:hover,.flow-stream.active{background:#d5ff3f66!important;border-color:var(--v-ink)!important}.flow-stream-name small{color:#596c5f!important}.flow-stream-track{background:#dfe3d7!important}
+.flow-rail{background:#dfe3d7!important}.flow-disclaimer{color:#50665a!important}
+:focus-visible{outline:3px solid var(--v-orange)!important;outline-offset:3px!important}
+@media(max-width:1150px){.sidebar{width:205px}.main-shell{margin-left:205px;width:calc(100% - 205px)}.hero-grid{grid-template-columns:1fr!important}}
+@media(max-width:760px){.sidebar{width:240px;box-shadow:12px 0 30px #0005}.main-shell{margin:0!important;width:100%!important}.mobile-bottom{display:flex!important;background:var(--v-ink)!important;border-top:2px solid var(--v-lime)!important}.mobile-bottom button{color:#bac7bf!important}.mobile-bottom button.active{color:var(--v-lime)!important}.welcome{padding:25px 20px!important}.welcome:before{display:none}.welcome-main{grid-template-columns:1fr!important;gap:16px!important}.welcome-visual{height:300px!important;min-height:300px!important;border-radius:25px 75px 25px 25px;box-shadow:7px 7px 0 var(--v-ink);padding:0!important}.welcome-visual:before{top:14px;left:14px;font-size:9px}.welcome-visual:after{bottom:13px;left:14px;font-size:9px}.welcome-copy{padding-top:14px}.welcome-copy h1{font-size:clamp(52px,12vw,82px)!important;margin:16px 0!important}.welcome-copy form{margin-top:20px}.hero-grid{grid-template-columns:1fr!important}}
+@media(max-width:420px){.welcome-visual{height:240px!important;min-height:240px!important}.welcome-copy h1{font-size:52px!important}.input-combo button{padding:15px!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}

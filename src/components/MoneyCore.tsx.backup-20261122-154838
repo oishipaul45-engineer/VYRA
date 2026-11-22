@@ -1,0 +1,96 @@
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useMemo, useRef } from 'react';
+import * as THREE from 'three';
+
+type Props = { tone: string; reducedMotion: boolean };
+
+const colors = ['#88f3e7', '#c6a3ff', '#ffad80'];
+
+function FlowRibbon({ index, reducedMotion }: { index: number; reducedMotion: boolean }) {
+  const ref = useRef<THREE.Group>(null);
+  const curve = useMemo(() => {
+    const offset = index * Math.PI * 2 / 3;
+    const points: THREE.Vector3[] = [];
+    for (let i = 0; i <= 80; i++) {
+      const t = i / 80;
+      const a = offset + t * Math.PI * 1.55;
+      const radius = 1.15 + Math.sin(t * Math.PI) * .46;
+      points.push(new THREE.Vector3(
+        Math.cos(a) * radius,
+        (t - .5) * 2.5 + Math.sin(a * 1.5) * .24,
+        Math.sin(a) * radius * .65
+      ));
+    }
+    return new THREE.CatmullRomCurve3(points);
+  }, [index]);
+
+  useFrame(({ clock }) => {
+    if (!reducedMotion && ref.current) {
+      ref.current.rotation.y = Math.sin(clock.elapsedTime * .29 + index) * .17;
+      ref.current.position.y = Math.sin(clock.elapsedTime * .75 + index) * .045;
+    }
+  });
+
+  return <group ref={ref} rotation={[.11, index * .35, -.2]}>
+    <mesh>
+      <tubeGeometry args={[curve, 160, .065, 12, false]} />
+      <meshPhysicalMaterial color={colors[index]} metalness={.62} roughness={.16} clearcoat={1} clearcoatRoughness={.07} emissive={colors[index]} emissiveIntensity={.12} />
+    </mesh>
+    <mesh>
+      <tubeGeometry args={[curve, 160, .012, 8, false]} />
+      <meshBasicMaterial color="#fff8ff" transparent opacity={.62} />
+    </mesh>
+  </group>;
+}
+
+function ValueCore({ tone, reducedMotion }: Props) {
+  const sculpture = useRef<THREE.Group>(null);
+  const discs = useRef<THREE.Group>(null);
+  useFrame(({ clock }) => {
+    if (reducedMotion) return;
+    const time = clock.elapsedTime;
+    if (sculpture.current) {
+      sculpture.current.rotation.y = -.22 + Math.sin(time * .21) * .18;
+      sculpture.current.rotation.z = Math.sin(time * .37) * .035;
+      sculpture.current.position.y = Math.sin(time * .8) * .075;
+    }
+    if (discs.current) discs.current.rotation.y = Math.sin(time * .34) * .12;
+  });
+
+  return <group ref={sculpture} rotation={[-.23, -.2, -.16]}>
+    <group ref={discs}>
+      {[-.43, -.2, .03, .26, .49].map((y, i) => (
+        <group key={i} position={[Math.sin(i * .9) * .07, y, 0]}>
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[.86, .86, .13, 96, 1, false]} />
+            <meshPhysicalMaterial color={i % 2 ? '#a7a0e9' : tone} metalness={.76} roughness={.17} clearcoat={1} clearcoatRoughness={.06} />
+          </mesh>
+          <mesh position={[0, 0, .075]}>
+            <torusGeometry args={[.76, .023, 10, 96]} />
+            <meshStandardMaterial color={i % 2 ? '#e0c9ff' : '#93f5ec'} metalness={.65} roughness={.19} emissive={i % 2 ? '#aa84e8' : '#56cabb'} emissiveIntensity={.24} />
+          </mesh>
+        </group>
+      ))}
+    </group>
+    {colors.map((_, i) => <FlowRibbon key={i} index={i} reducedMotion={reducedMotion} />)}
+    <mesh position={[0, 0, -.48]}>
+      <boxGeometry args={[1.9, 1.45, .04]} />
+      <meshBasicMaterial color="#7868bd" transparent opacity={.055} depthWrite={false} />
+    </mesh>
+  </group>;
+}
+
+export default function MoneyCore({ tone, reducedMotion }: Props) {
+  return <div className="core-canvas" role="img" aria-label="Three-dimensional metallic payment discs with flowing money ribbons and a rupee symbol" style={{ position: 'relative', width: '100%', height: '100%' }}>
+    <Canvas dpr={[1, 1.6]} camera={{ position: [0, 0, 6.4], fov: 42 }} gl={{ alpha: true, antialias: true }} fallback={<div className="core-fallback" />}>
+      <ambientLight intensity={1.15} />
+      <directionalLight position={[2, 5, 6]} intensity={3.4} color="#ffffff" />
+      <pointLight position={[-3, 1, 4]} intensity={35} color="#8df1ed" />
+      <pointLight position={[3, -2, 2]} intensity={30} color="#c09aff" />
+      <ValueCore tone={tone} reducedMotion={reducedMotion} />
+    </Canvas>
+    <div aria-hidden="true" style={{ pointerEvents: 'none', position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
+      <span style={{ transform: 'translateY(-2px)', color: '#fff7ff', fontFamily: 'Georgia, serif', fontSize: 'clamp(45px, 6vw, 80px)', fontWeight: 700, lineHeight: 1, textShadow: '0 3px 18px #20183e, 0 0 32px #83f0eb88', opacity: .94 }}>â‚¹</span>
+    </div>
+  </div>;
+}
