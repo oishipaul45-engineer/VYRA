@@ -1,0 +1,84 @@
+/* VYRA — Living Vaults */
+
+.vyra-vault-3d {
+  position: relative;
+  width: 100%;
+  height: 265px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 26px;
+  border: 2px solid #24152F;
+  background:
+    radial-gradient(circle at 50% 45%, #554065, #2B2038 65%, #17121F);
+}
+
+.vyra-vault-3d canvas {
+  position: relative;
+  z-index: 1;
+  outline: none;
+}
+
+.vyra-vault-ambient {
+  position: absolute;
+  inset: 15%;
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #45E6D044 0%, #FF78B922 45%, transparent 75%);
+  filter: blur(30px);
+}
+
+.vyra-vault-overlay {
+  position: absolute;
+  z-index: 2;
+  bottom: 16px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.vyra-vault-overlay span,
+.vyra-vault-overlay strong {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: .11em;
+}
+
+.vyra-vault-overlay span {
+  color: #F6E9E9;
+}
+
+.vyra-vault-overlay strong {
+  color: #45E6D0;
+}
+
+.vyra-vault-3d.is-complete {
+  border-color: #45E6D0;
+  box-shadow: 0 0 28px #45E6D044;
+}
+
+.vyra-vault-fallback {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: #45E6D0;
+  font-size: 26px;
+  font-weight: 900;
+}
+
+@media (max-width: 760px) {
+  .vyra-vault-3d {
+    height: 235px;
+  }
+
+  .vyra-vault-overlay span,
+  .vyra-vault-overlay strong {
+    font-size: 9px;
+  }
+}
