@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
-import { ArrowDownLeft, ArrowUpRight, ArrowRight, Check, Copy, Filter, Search, ShieldCheck, X } from 'lucide-react';
+import { ArrowDownLeft, ArrowUpRight, ArrowRight, Check, Copy, Download, FileText, Filter, Search, ShieldCheck, X } from 'lucide-react';
 import type { Transaction } from '../data/demo';
 import './PayStudio.css';
 
@@ -8,9 +8,10 @@ type Props = {
   transactions: Transaction[];
   formatMoney: (value: number) => string;
   onChooseRecipient: (name: string) => void;
+  hideAmounts: boolean;
 };
 
-export default function PayStudio({ transactions, formatMoney, onChooseRecipient }: Props) {
+export default function PayStudio({ transactions, formatMoney, onChooseRecipient, hideAmounts }: Props) {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<ViewFilter>('all');
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -63,6 +64,58 @@ export default function PayStudio({ transactions, formatMoney, onChooseRecipient
     }
   }
 
+  // VYRA_PAY_EXPORT_V1: download only explicitly requested demo records.
+  function downloadText(filename: string, contents: string, mime: string) {
+    const blob = new Blob([contents], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    try { link.click(); }
+    finally { link.remove(); window.setTimeout(() => URL.revokeObjectURL(url), 1000); }
+  }
+
+  function csvCell(value: string | number) {
+    const raw = String(value);
+    // Protect spreadsheet users from CSV formula injection, including leading whitespace.
+    const safe = /^[\s]*[=+@-]/.test(raw) && typeof value === 'string' ? "'" + raw : raw;
+    return '"' + safe.replaceAll('"', '""') + '"';
+  }
+
+  function exportFiltered() {
+    if (hideAmounts || visible.length === 0) return;
+    const rows = [
+      ['Reference', 'Date', 'Name', 'Category', 'Direction', 'Amount INR', 'Note'],
+      ...visible.map(item => [item.id, item.date, item.name, item.category,
+        item.category === 'Savings' ? 'Savings' : item.amount < 0 ? 'Debit' : 'Credit',
+        item.amount, item.note ?? '']),
+    ];
+    const csv = '\uFEFF' + rows.map(row => row.map(csvCell).join(',')).join('\r\n');
+    downloadText('vyra-demo-transactions-' + new Date().toISOString().slice(0, 10) + '.csv',
+      csv, 'text/csv;charset=utf-8');
+  }
+
+  function downloadReceipt(item: Transaction) {
+    const contents = [
+      'VYRA / DEMO TRANSACTION RECORD',
+      '================================',
+      'SIMULATED ONLY - NOT A BANK RECEIPT OR PROOF OF PAYMENT',
+      '',
+      'Reference: ' + item.id,
+      'Date: ' + item.date,
+      'Name: ' + item.name,
+      'Category: ' + item.category,
+      'Direction: ' + (item.category === 'Savings' ? 'Savings contribution' : item.amount < 0 ? 'Demo debit' : 'Demo credit'),
+      'Amount: ' + formatMoney(item.amount),
+      'Note: ' + (item.note ?? ''),
+      '',
+      'No real funds were transferred. VYRA is a payment simulator.',
+    ].join('\r\n');
+    downloadText('vyra-demo-record-' + item.id.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 50) + '.txt',
+      contents, 'text/plain;charset=utf-8');
+  }
+
   return (
     <section className="vyra-pay-extras" aria-label="Demo payment activity">
       <div className="vyra-pay-heading">
@@ -107,6 +160,13 @@ export default function PayStudio({ transactions, formatMoney, onChooseRecipient
             ))}
           </div>
         </div>
+        <div className="vyra-pay-export-row">
+          <span>{visible.length} matching demo records</span>
+          <button type="button" onClick={exportFiltered} disabled={hideAmounts || visible.length === 0}
+            title={hideAmounts ? 'Turn off Hide money amounts in Settings before exporting' : 'Export filtered demo records as CSV'}>
+            <Download size={16} /> EXPORT FILTERED CSV
+          </button>
+        </div>
         <div className="vyra-pay-list">
           {visible.map(item => (
             <button className="vyra-pay-record" type="button" key={item.id} onClick={() => { setCopied(false); setActiveId(item.id); }}>
@@ -137,6 +197,9 @@ export default function PayStudio({ transactions, formatMoney, onChooseRecipient
               <div className="vyra-pay-reference"><span>Reference</span><strong>{active.id}</strong></div>
             </div>
             <button className="vyra-pay-copy" type="button" onClick={() => void copyReference(active.id)}>{copied ? <Check size={17}/> : <Copy size={17}/>} {copied ? 'REFERENCE COPIED' : 'COPY REFERENCE'}</button>
+            <button className="vyra-pay-download" type="button" onClick={() => downloadReceipt(active)}>
+              <FileText size={17}/> DOWNLOAD DEMO RECORD
+            </button>
             <div className="vyra-pay-receipt-warning"><ShieldCheck size={16}/><span>DEMO RECORD ONLY. Not a bank receipt, payment confirmation, or proof of transfer. No real funds were transferred.</span></div>
           </section>
         </div>

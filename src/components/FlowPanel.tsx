@@ -39,7 +39,7 @@ export default function FlowPanel({ transactions, formatMoney, reducedMotion }: 
         <button className="flow-reset" onClick={()=>setSelection('All')} disabled={selection==='All'}>Show all categories</button>
       </section>
       <section className="panel flow-details"><div className="panel-heading"><div><span className="eyebrow">LIVE FILTER / DEMO DATA</span><h2>{selection==='All'?'All outflows':selection}</h2></div><TrendingDown size={20}/></div><div className="flow-focus-amount">{formatMoney(focusAmount)}</div><p className="muted-small">{visible.length} recorded {visible.length===1?'transaction':'transactions'} Â· Select a spending stream to filter</p>
-        <div className="transactions">{visible.map(t=><div className="transaction" key={t.id}><div className="transaction-icon"><Wallet size={17}/></div><div className="transaction-info"><strong>{t.name}</strong><small>{t.category} Â· {t.date}</small></div><b>{formatMoney(t.amount)}</b></div>)}</div>
+        <div className="transactions">{visible.map(t=><div className="transaction" key={t.id}><div className="transaction-icon"><Wallet size={17}/></div><div className="transaction-info"><strong>{t.name}</strong><small>{t.category} · {t.date}</small></div><b>{formatMoney(t.amount)}</b></div>)}</div>
         {visible.length===0&&<p className="muted-small">No transactions match this filter.</p>}
       </section>
     </div>

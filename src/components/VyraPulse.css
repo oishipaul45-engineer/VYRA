@@ -1,0 +1,32 @@
+.vyra-pulse {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 158px;
+  padding: 18px 19px 16px;
+  border-radius: 24px;
+  color: #fff;
+  background: radial-gradient(circle at 85% 12%, rgba(255,255,255,.29), transparent 36%), linear-gradient(132deg, #ff633e 0%, #ff769d 100%);
+  box-shadow: 0 18px 40px rgba(255,106,61,.18);
+}
+.vyra-pulse__top,.vyra-pulse__bottom {position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; gap:9px}
+.vyra-pulse__eyebrow {font-weight:800; letter-spacing:.15em; font-size:10px; line-height:1.4}
+.vyra-pulse__label {position:relative;z-index:2; margin-top:22px; font-size:10px; font-weight:750; letter-spacing:.12em; opacity:.85}
+.vyra-pulse__amount {position:relative;z-index:2; margin-top:4px; font-size:clamp(21px,2vw,26px);line-height:1.2;letter-spacing:-.035em;font-weight:850; overflow-wrap:anywhere; font-variant-numeric:tabular-nums}
+.vyra-pulse__bottom {justify-content:flex-start; margin-top:18px}
+.vyra-pulse__dot {width:7px;height:7px;border-radius:100%;background:#e8fff1;box-shadow:0 0 11px rgba(255,255,255,.7);flex:none}
+.vyra-pulse__dot--offline,.vyra-pulse__dot--conflict {background:#47253c;box-shadow:none}
+.vyra-pulse__dot--saving,.vyra-pulse__dot--loading {background:#fff0ab}
+.vyra-pulse__sync {color:#fff; font-family:inherit; font-size:11px; font-weight:750; letter-spacing:.02em; line-height:1.4}
+button.vyra-pulse__sync--action {border:0;padding:0;background:transparent;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-align:left}
+button.vyra-pulse__sync--action:focus-visible {outline:2px solid #fff;outline-offset:4px;border-radius:3px}
+.vyra-pulse__watermark {pointer-events:none;position:absolute;right:3px;bottom:22px;z-index:0;color:rgba(255,255,255,.14);font-size:88px;font-weight:900;letter-spacing:-.09em;line-height:1}
+.vyra-pulse__live {display:flex;align-items:flex-end;gap:3px;height:15px}
+.vyra-pulse__live span {width:3px;background:#fff;border-radius:8px;height:7px;animation:vyra-pulse-wave 1.6s ease-in-out infinite}
+.vyra-pulse__live span:nth-child(2) {height:13px;animation-delay:.2s}
+.vyra-pulse__live span:nth-child(3) {height:9px;animation-delay:.4s}
+@keyframes vyra-pulse-wave {0%,100% {transform:scaleY(.55);opacity:.7}50% {transform:scaleY(1);opacity:1}}
+.vyra-pulse--still .vyra-pulse__live span {animation:none}
+@media (prefers-reduced-motion:reduce) {.vyra-pulse__live span {animation:none}}

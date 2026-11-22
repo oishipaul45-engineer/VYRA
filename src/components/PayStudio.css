@@ -57,3 +57,12 @@
 @media(prefers-reduced-motion:reduce){.vyra-pay-contact{transition:none}}
 .vyra-pay-jump{display:flex;margin:-6px 0 22px auto;padding:12px 18px;border:2px solid #24152f;border-radius:99px;background:#45e6d0;color:#24152f;font:900 11px 'Space Grotesk',sans-serif;letter-spacing:.08em;cursor:pointer}
 .vyra-pay-jump:hover{background:#ff78b9}
+
+/* VYRA PAY EXPORT V1 - scoped, responsive export actions */
+.vyra-pay-export-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:-2px 0 12px;color:#857681;font-size:11px;font-weight:700}
+.vyra-pay-export-row button,.vyra-pay-download{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border:2px solid #24152f;border-radius:12px;background:#45e6d0;color:#24152f;font:800 11px 'Space Grotesk',sans-serif;letter-spacing:.05em;cursor:pointer}
+.vyra-pay-export-row button:hover:not(:disabled),.vyra-pay-download:hover{background:#ff78b9}
+.vyra-pay-export-row button:disabled{opacity:.48;cursor:not-allowed}
+.vyra-pay-download{width:100%;background:#fff5e9;margin:0 0 14px}
+.vyra-pay-export-row button:focus-visible,.vyra-pay-download:focus-visible{outline:3px solid #ff633e;outline-offset:3px}
+@media(max-width:500px){.vyra-pay-export-row{align-items:stretch}.vyra-pay-export-row button{width:100%}}
