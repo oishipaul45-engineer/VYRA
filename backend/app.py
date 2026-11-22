@@ -3,13 +3,16 @@ import sqlite3
 import hashlib
 import hmac
 import secrets
+import time
+import threading
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import jwt
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, EmailStr, Field
 
@@ -82,6 +85,57 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT"],
     allow_headers=["Authorization", "Content-Type"]
 )
+
+# VYRA SECURITY / LOGIN RATE LIMIT V1
+# Development-friendly, per-process IP limits. Configure a shared limiter for production.
+_rate_lock = threading.Lock()
+_rate_events: dict[tuple[str, str], list[float]] = {}
+
+
+def _rate_limit(ip: str, action: str) -> int:
+    """Seconds until retry, or 0 if the request is allowed."""
+    now = time.monotonic()
+    limit, window = (10, 60) if action == "login" else (5, 300)
+    key = (ip, action)
+    with _rate_lock:
+        # Expire old buckets to avoid indefinitely retaining IP addresses.
+        for item in list(_rate_events):
+            horizon = 60 if item[1] == "login" else 300
+            recent = [t for t in _rate_events[item] if now - t < horizon]
+            if recent:
+                _rate_events[item] = recent
+            else:
+                del _rate_events[item]
+        visits = _rate_events.setdefault(key, [])
+        if len(visits) >= limit:
+            return max(1, int(window - (now - visits[0])) + 1)
+        visits.append(now)
+    return 0
+
+
+@app.middleware("http")
+async def vyra_security_headers(request: Request, call_next):
+    if request.method == "POST" and request.url.path in ("/auth/login", "/auth/signup"):
+        ip = request.client.host if request.client else "unknown"
+        action = "login" if request.url.path.endswith("login") else "signup"
+        retry = _rate_limit(ip, action)
+        if retry:
+            response = JSONResponse(
+                status_code=429,
+                content={"detail": "Too many attempts. Please try again later."},
+                headers={"Retry-After": str(retry)},
+            )
+        else:
+            response = await call_next(request)
+    else:
+        response = await call_next(request)
+
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    if request.url.path.startswith(("/auth/", "/workspace/")):
+        response.headers["Cache-Control"] = "no-store"
+    return response
 
 security = HTTPBearer()
 

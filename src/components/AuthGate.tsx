@@ -40,7 +40,7 @@ export default function AuthGate({ children }: { children: (user: User, onLogout
       const result = data as LoginResult;
       sessionStorage.setItem(TOKEN_KEY, result.access_token);
       setUser(result.user); setPassword('');
-    } catch (err) { setError(err instanceof TypeError ? 'Cannot reach the VYRA backend. Start it on port 8000.' : err instanceof Error ? err.message : 'Authentication failed.'); }
+    } catch (err) { setError(err instanceof TypeError ? 'Cannot reach VYRA account services. Verify your backend connection and API address.' : err instanceof Error ? err.message : 'Authentication failed.'); }
     finally { setBusy(false); }
   }
   if (!ready) return <div className="vyra-auth-loading">VYRA / OPENING YOUR SPACE</div>;
