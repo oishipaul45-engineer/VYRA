@@ -3,9 +3,10 @@ import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import './KineticV.css';
 
-type Props = { reducedMotion: boolean };
+type ViewMode = 'Balance' | 'Spent' | 'Saved';
+type Props = { reducedMotion: boolean; mode: ViewMode; amount: number };
 
-function Sculpture({ reducedMotion }: Props) {
+function Sculpture({ reducedMotion, mode, amount }: Props) {
   const root = useRef<THREE.Group>(null);
   const ribbon = useRef<THREE.Group>(null);
 
@@ -63,21 +64,21 @@ function Sculpture({ reducedMotion }: Props) {
     root.current.rotation.x = THREE.MathUtils.damp(root.current.rotation.x, -pointer.y * 0.14 - 0.13, 2.0, delta);
     root.current.rotation.z = Math.sin(t * 0.34) * 0.045;
     root.current.position.y = Math.sin(t * 0.68) * 0.075;
-    ribbon.current.rotation.y = t * 0.14;
+    ribbon.current.rotation.y = t * (mode === 'Spent' ? 0.27 : mode === 'Saved' ? 0.09 : 0.14);
     ribbon.current.rotation.z = Math.sin(t * 0.37) * 0.06;
   });
 
   return (
-    <group ref={root} rotation={[-0.13, 0, -0.03]}>
+    <group ref={root} rotation={[-0.13, 0, -0.03]} scale={1 + Math.min(Math.max(amount / 100000, 0), 1) * 0.10}>
       <mesh geometry={vGeometry} rotation={[0, -0.11, 0]}>
-        <meshPhysicalMaterial color="#FF633E" metalness={0.76} roughness={0.19} clearcoat={1} clearcoatRoughness={0.12} />
+        <meshPhysicalMaterial color={mode === 'Spent' ? '#FF78B9' : mode === 'Saved' ? '#45E6D0' : '#FF633E'} metalness={0.76} roughness={0.19} clearcoat={1} clearcoatRoughness={0.12} />
       </mesh>
       <group ref={ribbon}>
         <mesh geometry={paths[0]}>
-          <meshPhysicalMaterial color="#45E6D0" metalness={0.82} roughness={0.14} clearcoat={1} />
+          <meshPhysicalMaterial color={mode === 'Spent' ? '#FF633E' : mode === 'Saved' ? '#B9A4E8' : '#45E6D0'} metalness={0.82} roughness={0.14} clearcoat={1} />
         </mesh>
         <mesh geometry={paths[1]}>
-          <meshPhysicalMaterial color="#F7B2E2" metalness={0.62} roughness={0.18} clearcoat={1} />
+          <meshPhysicalMaterial color={mode === 'Saved' ? '#F8E6FF' : mode === 'Spent' ? '#45E6D0' : '#F7B2E2'} metalness={0.62} roughness={0.18} clearcoat={1} />
         </mesh>
         <mesh position={[1.1, 0.14, 0.37]}>
           <sphereGeometry args={[0.14, 24, 24]} />
@@ -92,7 +93,7 @@ function Sculpture({ reducedMotion }: Props) {
   );
 }
 
-export default function KineticV({ reducedMotion }: Props) {
+export default function KineticV({ reducedMotion, mode, amount }: Props) {
   return (
     <div className="vyra-kinetic" role="img" aria-label="Interactive three-dimensional metallic V sculpture surrounded by liquid aqua ribbons">
       <div className="vyra-kinetic-glow" aria-hidden="true" />
@@ -102,9 +103,9 @@ export default function KineticV({ reducedMotion }: Props) {
         <directionalLight position={[3, 5, 6]} color="#FFF0E1" intensity={3} />
         <pointLight position={[-3, 1, 2]} color="#45E6D0" intensity={42} distance={10} />
         <pointLight position={[3, -2, 3]} color="#FF7F9E" intensity={35} distance={10} />
-        <Sculpture reducedMotion={reducedMotion} />
+        <Sculpture reducedMotion={reducedMotion} mode={mode} amount={amount} />
       </Canvas>
-      <span className="vyra-kinetic-caption">V / THE MOTION ENGINE</span>
+      <span className="vyra-kinetic-caption">V / {mode.toUpperCase()} IN MOTION</span>
       <span className="vyra-kinetic-index">001 â€” SCULPTURE</span>
     </div>
   );
