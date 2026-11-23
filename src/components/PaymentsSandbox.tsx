@@ -8,7 +8,7 @@ type Capabilities = {
   live_payments_enabled: boolean;
 };
 type TestOrder = { id: string; provider_order_id: string | null; amount_paise: number; status: string; mode: string };
-const API = import.meta.env.VITE_VYRA_API || 'http://127.0.0.1:8001';
+const API = import.meta.env.VITE_VYRA_API || (import.meta.env.PROD ? '' : 'http://127.0.0.1:8001');
 const bearer = () => ({ Authorization: `Bearer ${sessionStorage.getItem('vyra-auth-session') || ''}` });
 
 export default function PaymentsSandbox() {

@@ -23,6 +23,15 @@ SECRET = os.getenv("VYRA_JWT_SECRET", "")
 if len(SECRET) < 32:
     raise RuntimeError("Missing or weak VYRA_JWT_SECRET in backend/.env")
 
+# VYRA RAILWAY BETA SAFETY: fail closed unless this is an invite-only demo.
+if os.getenv("RAILWAY_ENVIRONMENT") and os.getenv("VYRA_PUBLIC_BETA") != "1":
+    raise RuntimeError("Railway deployment requires VYRA_PUBLIC_BETA=1")
+if os.getenv("VYRA_PUBLIC_BETA") == "1":
+    if not os.getenv("VYRA_ALLOWED_SIGNUP_EMAILS", "").strip():
+        raise RuntimeError("Missing VYRA_ALLOWED_SIGNUP_EMAILS for the public beta")
+    if not os.getenv("VYRA_DB_PATH", "").startswith("/data/"):
+        raise RuntimeError("Beta database must be on the persistent /data volume")
+
 DB_PATH = Path(os.getenv("VYRA_DB_PATH", str(BASE_DIR / "vyra_users.sqlite3")))
 
 def connect():
@@ -208,6 +217,10 @@ def health():
 def signup(body: Signup):
     name = body.name.strip()
     email = str(body.email).strip().lower()
+    if os.getenv("VYRA_PUBLIC_BETA") == "1":
+        allowed = {e.strip().lower() for e in os.getenv("VYRA_ALLOWED_SIGNUP_EMAILS", "").split(",") if e.strip()}
+        if email not in allowed:
+            raise HTTPException(status_code=403, detail="This beta is invite-only")
 
     if len(name) < 2:
         raise HTTPException(status_code=422, detail="Name is too short")
@@ -460,9 +473,18 @@ def restore_workspace(body: WorkspaceRestore, user=Depends(current_user)):
 
 
 # VYRA merchant sandbox + partner-gated P2P foundation. TEST ONLY.
-from payment_foundation import build_payment_router
-app.include_router(build_payment_router(connect, current_user))
+if os.getenv("VYRA_PUBLIC_BETA") != "1":
+    from payment_foundation import build_payment_router
+    app.include_router(build_payment_router(connect, current_user))
 
 # VYRA Core 1.1 - test merchant checkout router
-from vyra_checkout_bridge import build_router as build_checkout_bridge
-app.include_router(build_checkout_bridge(current_user))
+if os.getenv("VYRA_PUBLIC_BETA") != "1":
+    from vyra_checkout_bridge import build_router as build_checkout_bridge
+    app.include_router(build_checkout_bridge(current_user))
+
+
+# Public Railway beta: serve the built Vite site at the SAME origin as the account API.
+# Merchant/checkout routers above are intentionally not registered in this mode.
+if os.getenv("VYRA_PUBLIC_BETA") == "1":
+    from fastapi.staticfiles import StaticFiles
+    app.mount("/", StaticFiles(directory=os.environ["VYRA_STATIC_DIR"], html=True), name="vyra_public_frontend")

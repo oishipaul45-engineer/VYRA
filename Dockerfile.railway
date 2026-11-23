@@ -1,0 +1,16 @@
+# Single service: built Vite frontend + FastAPI demo backend, same HTTPS origin.
+FROM node:22-alpine AS frontend
+WORKDIR /ui
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM python:3.13-slim
+WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 VYRA_PUBLIC_BETA=1 VYRA_STATIC_DIR=/app/public
+COPY backend/requirements.railway.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+COPY backend/ /app/
+COPY --from=frontend /ui/dist /app/public
+CMD ["sh", "-c", "exec uvicorn app:app --host 0.0.0.0 --port ${PORT:-8080}"]

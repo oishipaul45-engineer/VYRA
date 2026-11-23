@@ -3,7 +3,7 @@ import { starter, type State } from '../data/demo';
 
 type User = { id: number; name: string; email: string };
 type Status = 'loading' | 'synced' | 'saving' | 'offline' | 'conflict';
-const API = import.meta.env.VITE_VYRA_API || 'http://127.0.0.1:8000';
+const API = import.meta.env.VITE_VYRA_API || (import.meta.env.PROD ? '' : 'http://127.0.0.1:8001');
 const TOKEN_KEY = 'vyra-auth-session';
 const keyFor = (id: number) => `vyra-demo-v1-user-${id}`;
 

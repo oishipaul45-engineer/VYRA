@@ -5,7 +5,7 @@ import './vyra-auth.css';
 
 type User = { id: number; name: string; email: string };
 type LoginResult = { access_token: string; token_type: string; user: User };
-const API = import.meta.env.VITE_VYRA_API || 'http://127.0.0.1:8000';
+const API = import.meta.env.VITE_VYRA_API || (import.meta.env.PROD ? '' : 'http://127.0.0.1:8001');
 const TOKEN_KEY = 'vyra-auth-session';
 
 export default function AuthGate({ children }: { children: (user: User, onLogout: () => void) => ReactNode }) {
