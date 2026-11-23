@@ -25,6 +25,19 @@
 
 ---
 
+
+## 🌐 VYRA — LIVE WEBSITE
+
+**[🚀 LAUNCH VYRA](https://vyra-production-adbf19d0.up.railway.app)**
+
+Experience VYRA's interactive 3D fintech interface, account system, savings Vaults, Circles, and simulated payments.
+
+**Status:** Public beta | Hosted on Railway
+
+> VYRA currently uses simulated financial transactions. No real-money transfers are enabled.
+
+---
+
 ## `01 / THE MANIFESTO`
 
 ### Finance doesn't need another ordinary interface.
